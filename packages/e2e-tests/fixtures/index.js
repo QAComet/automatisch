@@ -31,6 +31,11 @@ exports.test = test.extend({
   userInterfacePage: async ({ page }, use) => {
     await use(new UserInterfacePage(page));
   },
+  flags: async ({ page }, use) => {
+    await use({
+      hasLicense: process.env.HAS_LICENSE === 'true'
+    })
+  }
 });
 
 exports.publicTest = test.extend({

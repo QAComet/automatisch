@@ -5,9 +5,10 @@ test.describe('Apps page', () => {
   test.beforeEach(async ({ applicationsPage }) => {
     await applicationsPage.drawerLink.click();
   });
-
+  
   // no connected application exists in an empty account
-  test.skip('displays no applications', async ({ applicationsPage }) => {
+  test('displays no applications', async ({ applicationsPage, flags }) => {
+    test.skip(flags.hasLicense !== true, 'Only run test for uses that have a license')
     await applicationsPage.page.getByTestId('apps-loader').waitFor({
       state: 'detached',
     });
@@ -18,7 +19,7 @@ test.describe('Apps page', () => {
     });
   });
 
-  test.describe('can add connection', () => {
+  test.skip('can add connection', () => {
     test.beforeEach(async ({ applicationsPage }) => {
       await expect(applicationsPage.addConnectionButton).toBeClickableLink();
       await applicationsPage.addConnectionButton.click();

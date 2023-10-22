@@ -4,6 +4,18 @@ const { BasePage } = require('./base-page');
 
 export class LoginPage extends BasePage {
   path = '/login';
+  defaultEmail = process.env.LOGIN_EMAIL
+  defaultPassword = process.env.LOGIN_PASSWORD
+
+  static setDefaultLogin (email, password) {
+    this.defaultEmail = email;
+    this.defaultPassword = password;
+  }
+
+  static resetDefaultLogin () {
+    this.defaultEmail = process.env.LOGIN_EMAIL;
+    this.defaultPassword = process.env.LOGIN_PASSWORD;
+  }
 
   /**
    * @param {import('@playwright/test').Page} page
@@ -22,8 +34,8 @@ export class LoginPage extends BasePage {
   }
 
   async login(
-    email = process.env.LOGIN_EMAIL,
-    password = process.env.LOGIN_PASSWORD
+    email = LoginPage.defaultEmail,
+    password = LoginPage.defaultPassword
   ) {
     await this.page.goto(this.path);
     await this.emailTextField.fill(email);
